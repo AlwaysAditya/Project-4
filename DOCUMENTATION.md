@@ -2,17 +2,17 @@
 
 ```yaml
 # ---------- POSTGRES ----------
-POSTGRES_USER= "sudhanshu"
-POSTGRES_PASSWORD= "flights"
-POSTGRES_DB= "flightsdb"
+POSTGRES_USER= "xxxxx"
+POSTGRES_PASSWORD= "xxxxx"
+POSTGRES_DB= "xxxxx"
 
 
 # ---------- AIRFLOW ADMIN ----------
-AIRFLOW_ADMIN_USER= "sudhanshu"
-AIRFLOW_ADMIN_FIRSTNAME= "sudhanshu"
-AIRFLOW_ADMIN_LASTNAME= "gusain"
-AIRFLOW_ADMIN_EMAIL= "admin@example.com"
-AIRFLOW_ADMIN_PASSWORD= "flights"
+AIRFLOW_ADMIN_USER= "xxxxx"
+AIRFLOW_ADMIN_FIRSTNAME= "xxxxx"
+AIRFLOW_ADMIN_LASTNAME= "xxxxx"
+AIRFLOW_ADMIN_EMAIL= "xxxxx@example.com"
+AIRFLOW_ADMIN_PASSWORD= "xxxxx"
 ```
 
 ## DATA SOURCE 
@@ -94,50 +94,57 @@ CREATE TABLE FLIGHT_TABLE (
 ```
 
 
-## SNOWFLAKE DASHBOARD SCRIPTS
+## SNOWFLAKE STREAMLIT SCRIPT EXAMPLE
 
-### 1. Top 5 Countries by Total Flights
 ```sql
+# Import python packages
+import streamlit as st
+from snowflake.snowpark.context import get_active_session
+
+# Page Title
+st.title("✈️ Flight Analytics Dashboard")
+
+# Get Snowflake session
+session = get_active_session()
+
+# Query your Snowflake table
+query = """
 SELECT
     origin_country,
-    SUM(total_flights) AS total_flights
-FROM FLIGHTS.FLIGHTS_SCHEMA.FLIGHT_TABLE
-GROUP BY origin_country
-ORDER BY total_flights DESC
-LIMIT 5;
-```
+    total_flights,
+    avg_velocity,
+    on_ground
+FROM FLIGHT_TABLE
+"""
 
-### 2. Countries with Fastest Flights
-```sql
-SELECT
-    origin_country,
-    ROUND(AVG(avg_velocity),2) AS avg_speed
-FROM FLIGHTS.FLIGHTS_SCHEMA.FLIGHT_TABLE
-GROUP BY origin_country
-ORDER BY avg_speed DESC
-LIMIT 5;
-```
+# Execute query
+df = session.sql(query).to_pandas()
 
-### 3. Total Flights 
+# Display Data
+st.subheader("Flight Dataset")
+st.dataframe(df, use_container_width=True)
 
-```sql
-SELECT
-SELECT SUM(total_flights) AS total_flights
-FROM FLIGHTS.FLIGHTS_SCHEMA.FLIGHT_TABLE;
-```
+# Bar Chart - Total Flights by Country
+st.subheader("Total Flights by Country")
+st.bar_chart(
+    data=df,
+    x="ORIGIN_COUNTRY",
+    y="TOTAL_FLIGHTS"
+)
 
-### 4. ACTIVE Countries
-```sql
-SELECT COUNT(DISTINCT origin_country) AS countries
-FROM FLIGHTS.FLIGHTS_SCHEMA.FLIGHT_TABLE;
-```
+# Line Chart - Average Velocity
+st.subheader("Average Velocity")
+st.line_chart(
+    data=df,
+    x="ORIGIN_COUNTRY",
+    y="AVG_VELOCITY"
+)
 
-### 5. Flight Activity Trend Over Time (Line Chart)
-```sql
-SELECT
-    DATE(window_start) AS flight_date,
-    SUM(total_flights) AS total_flights
-FROM FLIGHTS.FLIGHTS_SCHEMA.FLIGHT_TABLE
-GROUP BY DATE(window_start)
-ORDER BY flight_date;
+# Bar Chart - Aircraft on Ground
+st.subheader("Aircraft on Ground")
+st.bar_chart(
+    data=df,
+    x="ORIGIN_COUNTRY",
+    y="ON_GROUND"
+)
 ```
