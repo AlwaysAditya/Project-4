@@ -1,0 +1,18 @@
+[2026-07-14T18:56:04.859+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-07-14T18:56:04.888+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.bronze_ingest manual__2026-07-14T18:56:01.921214+00:00 [queued]>
+[2026-07-14T18:56:04.896+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.bronze_ingest manual__2026-07-14T18:56:01.921214+00:00 [queued]>
+[2026-07-14T18:56:04.898+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2026-07-14T18:56:04.911+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): bronze_ingest> on 2026-07-14 18:56:01.921214+00:00
+[2026-07-14T18:56:04.922+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', '***_ops_medallion_pipe', 'bronze_ingest', 'manual__2026-07-14T18:56:01.921214+00:00', '--job-id', '18', '--raw', '--subdir', 'DAGS_FOLDER/flight-pipeline.py', '--cfg-path', '/tmp/tmpt6dylpa7']
+[2026-07-14T18:56:04.925+0000] {standard_task_runner.py:91} INFO - Job 18: Subtask bronze_ingest
+[2026-07-14T18:56:04.926+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=111) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-07-14T18:56:04.927+0000] {standard_task_runner.py:64} INFO - Started process 128 to run task
+[2026-07-14T18:56:04.987+0000] {task_command.py:426} INFO - Running <TaskInstance: flights_ops_medallion_pipe.bronze_ingest manual__2026-07-14T18:56:01.921214+00:00 [running]> on host 08a7049abaac
+[2026-07-14T18:56:05.073+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='***_ops_medallion_pipe' AIRFLOW_CTX_TASK_ID='bronze_ingest' AIRFLOW_CTX_EXECUTION_DATE='2026-07-14T18:56:01.921214+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-07-14T18:56:01.921214+00:00'
+[2026-07-14T18:56:05.076+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-07-14T18:56:07.678+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-07-14T18:56:07.679+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-07-14T18:56:07.691+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=***_ops_medallion_pipe, task_id=bronze_ingest, run_id=manual__2026-07-14T18:56:01.921214+00:00, execution_date=20260714T185601, start_date=20260714T185604, end_date=20260714T185607
+[2026-07-14T18:56:07.758+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-07-14T18:56:07.779+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-07-14T18:56:07.783+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
